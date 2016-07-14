@@ -1,0 +1,54 @@
+
+syntax = "proto3";
+
+package token;
+
+service Token {
+    rpc GetToken (TokenRequest) returns (TokenResponse) {}
+}
+
+message TokenRequest {}
+
+message TokenResponse {
+
+    string sessionToken = 1;
+    LoginStatus loginStatus = 2;
+
+    enum LoginStatus {
+        SUCCESS = 0;
+        INVALID_USERNAME_OR_PASSWORD = 1; //   the username or password are invalid
+        ACCOUNT_NOW_LOCKED = 2; //   the account was just locked
+        ACCOUNT_ALREADY_LOCKED  = 3; //   the account is already locked
+        PENDING_AUTH = 4; //   pending authentication
+        TELBET_TERMS_CONDITIONS_NA = 5; //   Telbet terms and conditions rejected
+        DUPLICATE_CARDS = 6; //   duplicate cards
+        SECURITY_QUESTION_WRONG_3X = 7; //   the user has entered wrong the security answer 3 times
+        KYC_SUSPEND = 8; //   KYC suspended
+        SUSPENDED = 9; //   the account is suspended
+        CLOSED  = 10; //   the account is closed
+        SELF_EXCLUDED = 11; //   the account has been self-excluded
+        INVALID_CONNECTIVITY_TO_REGULATOR_DK = 12; //  the DK regulator cannot be accessed due to some internal problems in the system behind or in at regulator; timeout cases included.
+        NOT_AUTHORIZED_BY_REGULATOR_DK = 13; //   the user identified by the given credentials is not authorized in the DK's jurisdictions due to the regulators' policies. Ex: the user for which this session should be created is not allowed to act(play, bet) in the DK's jurisdiction.
+        INVALID_CONNECTIVITY_TO_REGULATOR_IT = 14; //   the IT regulator cannot be accessed due to some internal problems in the system behind or in at regulator; timeout cases included.
+        NOT_AUTHORIZED_BY_REGULATOR_IT = 15; //   the user identified by the given credentials is not authorized in the IT's jurisdictions due to the regulators' policies. Ex: the user for which this session should be created is not allowed to act(play, bet) in the IT's jurisdiction.
+        SECURITY_RESTRICTED_LOCATION = 16; //   the account is restricted due to security concerns
+        BETTING_RESTRICTED_LOCATION = 17; //   the account is accessed from a location where betting is restricted
+        TRADING_MASTER = 18; //   Trading Master Account
+        TRADING_MASTER_SUSPENDED = 19; //   Suspended Trading Master Account
+        AGENT_CLIENT_MASTER = 20; //   Agent Client Master
+        AGENT_CLIENT_MASTER_SUSPENDED = 21; //   Suspended Agent Client Master
+        DANISH_AUTHORIZATION_REQUIRED = 22; //   Danish authorization required
+        SPAIN_MIGRATION_REQUIRED = 23; //   Spain migration required
+        DENMARK_MIGRATION_REQUIRED = 24; //   Denmark migration required
+        SPANISH_TERMS_ACCEPTANCE_REQUIRED = 25; //   The latest Spanish terms and conditions version must be accepted
+        ITALIAN_CONTRACT_ACCEPTANCE_REQUIRED = 26; //   The latest Italian contract version must be accepted
+        CERT_AUTH_REQUIRED = 27; //   Certificate required or certificate present but could not authenticate with it
+        CHANGE_PASSWORD_REQUIRED = 28; //   change password required
+        PERSONAL_MESSAGE_REQUIRED = 29; //   personal message required for the user
+        INTERNATIONAL_TERMS_ACCEPTANCE_REQUIRED = 30; // The latest international terms and conditions must be accepted prior to logging in.
+        EMAIL_LOGIN_NOT_ALLOWED = 31; //  This account has not opted in to log in with the email
+        MULTIPLE_USERS_WITH_SAME_CREDENTIAL = 32; // There is more than one account with the same credential
+        ACCOUNT_PENDING_PASSWORD_CHANGE = 33; //  The account must undergo password recovery to reactivate
+        TEMPORARY_BAN_TOO_MANY_REQUESTS = 34; // The limit for successful login requests per minute has been exceeded. New login attempts will be banned for 20 minutes
+    }
+}

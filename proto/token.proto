@@ -7,7 +7,9 @@ service Token {
     rpc GetToken (TokenRequest) returns (TokenResponse) {}
 }
 
-message TokenRequest {}
+message TokenRequest {
+    bool flushCache = 1; // if true - request token form API and update cache
+}
 
 message TokenResponse {
 
@@ -50,5 +52,24 @@ message TokenResponse {
         MULTIPLE_USERS_WITH_SAME_CREDENTIAL = 32; // There is more than one account with the same credential
         ACCOUNT_PENDING_PASSWORD_CHANGE = 33; //  The account must undergo password recovery to reactivate
         TEMPORARY_BAN_TOO_MANY_REQUESTS = 34; // The limit for successful login requests per minute has been exceeded. New login attempts will be banned for 20 minutes
+    }
+}
+
+message KeepAliveResponse {
+
+    string token = 1;
+    string product = 2;
+    Status status = 3;
+    Error error = 4;
+
+    enum Status {
+        SUCCESS = 0;
+        FAIL = 1;
+    }
+
+    enum Error {
+        INPUT_VALIDATION_ERROR = 0;
+        INTERNAL_ERROR = 1;
+        NO_SESSION = 2;
     }
 }
